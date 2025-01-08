@@ -1,14 +1,27 @@
 package main
 
 import (
-    "fmt"
-    "strings"
-    "bufio"
-    "os"
+	"bufio"
+	"fmt"
+	"os"
+	"strings"
+
+	"github.com/ZicorXXIX/pokedex/internal/pokeapi"
 )
 
+type config struct {
+    pokeapiClient pokeapi.Client
+    nextPage      *string
+    prevPage      *string
+}
 
-func startRepl(){
+type cliCommand struct {
+    name            string
+    description     string
+    callback        func(*config) error
+}
+
+func startRepl(cfg *config){
     reader := bufio.NewScanner(os.Stdin)
     for{
         fmt.Print("Pokedex>")
@@ -20,7 +33,7 @@ func startRepl(){
         cmd, found := commands[input]
 
         if found {
-            if err:= cmd.callback(); err != nil{
+            if err:= cmd.callback(cfg); err != nil{
                 fmt.Printf("Error: %v \n",err)
             }
         }else {
