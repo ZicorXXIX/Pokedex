@@ -13,10 +13,10 @@ func (c *Client) GetLocations(pageUrl *string) (LocationAreaResponse, error) {
     if pageUrl != nil {
         url = *pageUrl
     }
-    cachedData, exists := c.cache.Get(url)
+    cachedData, ok:= c.cache.Get(url)
 
     var data LocationAreaResponse
-    if exists {
+    if ok {
         fmt.Println("Retreiving Cached Data")
         if err:= json.Unmarshal(cachedData, &data); err != nil {
             return LocationAreaResponse{}, err
