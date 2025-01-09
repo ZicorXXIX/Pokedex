@@ -1,5 +1,4 @@
 package main
-
 import (
 	"fmt"
 	"time"
@@ -12,7 +11,6 @@ func main() {
 
     initCommands()
     pokeClient := pokeapi.NewClient(5 *time.Second)
-
     cfg := &config{
         pokeapiClient: pokeClient,
     }

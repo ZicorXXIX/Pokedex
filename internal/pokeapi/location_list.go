@@ -1,9 +1,10 @@
 package pokeapi
 
 import (
-    "net/http"
 	"encoding/json"
-    "io"
+	"fmt"
+	"io"
+	"net/http"
 )
 
 
@@ -12,7 +13,18 @@ func (c *Client) GetLocations(pageUrl *string) (LocationAreaResponse, error) {
     if pageUrl != nil {
         url = *pageUrl
     }
+    cachedData, exists := c.cache.Get(url)
 
+    var data LocationAreaResponse
+    if exists {
+        fmt.Println("Retreiving Cached Data")
+        if err:= json.Unmarshal(cachedData, &data); err != nil {
+            return LocationAreaResponse{}, err
+        }
+        return data, nil
+    }
+
+    
     req, err := http.NewRequest("GET", url, nil)
     if err != nil {
         return LocationAreaResponse{}, err
@@ -28,11 +40,12 @@ func (c *Client) GetLocations(pageUrl *string) (LocationAreaResponse, error) {
         return LocationAreaResponse{}, err
     }
     defer res.Body.Close()
+    c.cache.Add(url, []byte(body))
 
-    var data LocationAreaResponse
     if json.Valid([]byte(body)){
         json.Unmarshal([]byte(body), &data)
     }
+
 
     return data, nil
 }
