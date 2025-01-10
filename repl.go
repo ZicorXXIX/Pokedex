@@ -11,6 +11,7 @@ import (
 
 type config struct {
     pokeapiClient pokeapi.Client
+    pokedex       map[string]pokeapi.Pokemon
     nextPage      *string
     prevPage      *string
 }
