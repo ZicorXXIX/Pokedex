@@ -5,46 +5,46 @@ var commands map[string]cliCommand
 
 func initCommands() {
     commands = map[string]cliCommand{
-        "exit": {
-            name: "exit",
-            description: "Exit the Pokedex",
-            callback: commandExit,
-        },
         "help": {
-            name: "help",
-            description: "Displays help message",
-            callback: commandHelp,
-        },
-        "map": {
-            name: "map",
-            description: "It displays the names of 20 location areas in the Pokemon world.",
-            callback: commandMap,
-        },
-        "mapb": {
-            name: "mapb(map back)",
-            description:  "Displays previous 20 location areas in the Pokemon world.",
-            callback: commandMapBack,
-        },
-        "explore": {
-            name: "explore",
-            description: "Explore the location area selected.",
-            callback: commandExplore,
-        },
-        "catch": {
-            name: "catch",
-            description: "Catch a Pokemon",
-            callback: commandCatch,
-        },
-        "inspect": {
-            name: "inspect",
-            description: "inspect <pokemon_name>",
-            callback: commandInspect,
-        },
-        "pokedex": {
-            name: "pokedex",
-            description: "Pokedex",
-            callback: commandPokedex,
-        },
+			name:        "help",
+			description: "Displays a help message",
+			callback:    commandHelp,
+		},
+		"catch": {
+			name:        "catch <pokemon_name>",
+			description: "Attempt to catch a pokemon",
+			callback:    commandCatch,
+		},
+		"inspect": {
+			name:        "inspect <pokemon_name>",
+			description: "View details about a caught Pokemon",
+			callback:    commandInspect,
+		},
+		"explore": {
+			name:        "explore <location_name>",
+			description: "Explore a location",
+			callback:    commandExplore,
+		},
+		"map": {
+			name:        "map",
+			description: "Get the next page of locations",
+			callback:    commandMap,
+		},
+		"mapb": {
+			name:        "mapb",
+			description: "Get the previous page of locations",
+			callback:    commandMapBack,
+		},
+		"pokedex": {
+			name:        "pokedex",
+			description: "See all the pokemon you've caught",
+			callback:    commandPokedex,
+		},
+		"exit": {
+			name:        "exit",
+			description: "Exit the Pokedex",
+			callback:    commandExit,
+		},
     }
 }
 
