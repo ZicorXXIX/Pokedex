@@ -18,7 +18,7 @@ type config struct {
 type cliCommand struct {
     name            string
     description     string
-    callback        func(*config) error
+    callback        func(*config, ...string) error
 }
 
 func startRepl(cfg *config){
@@ -30,10 +30,18 @@ func startRepl(cfg *config){
         }
         input := reader.Text()
 
-        cmd, found := commands[input]
+        parts := strings.Fields(input)
+        if len(parts) == 0 {
+            continue
+        }
+
+        cmdName := parts[0]
+        args := parts[1:]
+
+        cmd, found := commands[cmdName]
 
         if found {
-            if err:= cmd.callback(cfg); err != nil{
+            if err:= cmd.callback(cfg, args...); err != nil{
                 fmt.Printf("Error: %v \n",err)
             }
         }else {
