@@ -30,6 +30,11 @@ func initCommands() {
             description: "Explore the location area selected.",
             callback: commandExplore,
         },
+        "catch": {
+            name: "catch",
+            description: "Catch a Pokemon",
+            callback: commandCatch,
+        },
     }
 }
 

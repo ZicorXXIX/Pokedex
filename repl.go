@@ -9,8 +9,13 @@ import (
 	"github.com/ZicorXXIX/pokedex/internal/pokeapi"
 )
 
+type Pokemon struct {
+    Name            string
+    BaseExperience  int
+}
 type config struct {
     pokeapiClient pokeapi.Client
+    pokedex       map[string]Pokemon
     nextPage      *string
     prevPage      *string
 }
