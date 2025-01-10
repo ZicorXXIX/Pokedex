@@ -22,7 +22,7 @@ func commandInspect(cfg *config, args ...string) error {
             fmt.Printf(" - %s\n", value.Type.Name)
         }
     } else {
-        return errors.New("Error")
+        return errors.New("you have not caught that pokemon")
     }
 
     return nil

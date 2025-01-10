@@ -40,6 +40,11 @@ func initCommands() {
             description: "inspect <pokemon_name>",
             callback: commandInspect,
         },
+        "pokedex": {
+            name: "pokedex",
+            description: "Pokedex",
+            callback: commandPokedex,
+        },
     }
 }
 
