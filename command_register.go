@@ -35,6 +35,11 @@ func initCommands() {
             description: "Catch a Pokemon",
             callback: commandCatch,
         },
+        "inspect": {
+            name: "inspect",
+            description: "inspect <pokemon_name>",
+            callback: commandInspect,
+        },
     }
 }
 

@@ -1,17 +1,22 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"math/rand"
 	"time"
 )
 
 func commandCatch(cfg *config, args ...string) error {
-    fmt.Printf("Throwing a Pokeball at %s...\n", args[0])
+    if len(args) != 1 {
+		return errors.New("you must provide a pokemon name")
+	}
+
     res, err := cfg.pokeapiClient.GetPokemonDetails(args[0])
     if err != nil {
         return err
     }
+    fmt.Printf("Throwing a Pokeball at %s...\n", args[0])
     xmax := 635
     xmin := 20
     normalized_base_experience := float64(res.BaseExperience -xmin)/float64(xmax - xmin) 
@@ -26,10 +31,7 @@ func commandCatch(cfg *config, args ...string) error {
     }
     if randomNumber > int(normalized_base_experience *100) {
         fmt.Printf("You caught %s!\n", res.Name)
-        cfg.pokedex[res.Name] = Pokemon{
-            Name: res.Name,
-            BaseExperience: res.BaseExperience,
-        }
+        cfg.pokedex[res.Name] = res  
     } else {
         fmt.Printf("%s escaped!\n", res.Name)
     }

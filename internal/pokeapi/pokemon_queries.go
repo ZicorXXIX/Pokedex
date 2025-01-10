@@ -6,39 +6,41 @@ import (
 	"net/http"
 )
 
-func (c *Client) GetPokemonDetails(name string) (PokemonDetails, error) {
-    url := baseUrl + "/pokemon/" + name
+func (c *Client) GetPokemonDetails(pokemonName string) (PokemonDetails, error) {
+	url := baseUrl + "/pokemon/" + pokemonName
 
-    var data PokemonDetails
-    cachedData, ok := c.cache.Get(url)
-    if ok {
-        if err:=json.Unmarshal(cachedData, &data); err != nil {
-            return PokemonDetails{}, err
-        }
-        return data, nil
-    }
+	if val, ok := c.cache.Get(url); ok {
+		pokemonResp := PokemonDetails{}
+		err := json.Unmarshal(val, &pokemonResp)
+		if err != nil {
+			return PokemonDetails{}, err
+		}
+		return pokemonResp, nil
+	}
 
-    req, err := http.NewRequest("GET", url, nil) 
-    if err != nil {
-        return PokemonDetails{}, nil
-    }
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return PokemonDetails{}, err
+	}
 
-    res, err := c.httpClient.Do(req)
-    if err != nil {
-        return PokemonDetails{}, err
-    }
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+		return PokemonDetails{}, err
+	}
+	defer resp.Body.Close()
 
-    body, err := io.ReadAll(res.Body)
-    if err != nil {
-        return PokemonDetails{}, err
-    }
-    defer res.Body.Close()
+	dat, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return PokemonDetails{}, err
+	}
 
-    if json.Valid([]byte(body)) {
-        json.Unmarshal([]byte(body), &data)
-    }
+	pokemonResp := PokemonDetails{}
+	err = json.Unmarshal(dat, &pokemonResp)
+	if err != nil {
+		return PokemonDetails{}, err
+	}
 
-    c.cache.Add(url, []byte(body))
+	c.cache.Add(url, dat)
 
-    return data, nil    
+	return pokemonResp, nil
 }
