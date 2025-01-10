@@ -5,7 +5,7 @@ var commands map[string]cliCommand
 
 func initCommands() {
     commands = map[string]cliCommand{
-       "help": {
+      "help": {
 			name:        "help",
 			description: "Displays a help message",
 			callback:    commandHelp,
@@ -14,6 +14,11 @@ func initCommands() {
 			name:        "catch <pokemon_name>",
 			description: "Attempt to catch a pokemon",
 			callback:    commandCatch,
+		},
+		"inspect": {
+			name:        "inspect <pokemon_name>",
+			description: "View details about a caught Pokemon",
+			callback:    commandInspect,
 		},
 		"explore": {
 			name:        "explore <location_name>",
@@ -29,6 +34,11 @@ func initCommands() {
 			name:        "mapb",
 			description: "Get the previous page of locations",
 			callback:    commandMapBack,
+		},
+		"pokedex": {
+			name:        "pokedex",
+			description: "See all the pokemon you've caught",
+			callback:    commandPokedex,
 		},
 		"exit": {
 			name:        "exit",
