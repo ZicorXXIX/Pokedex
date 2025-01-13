@@ -2,6 +2,8 @@ package main
 import (
 	"errors"
 	"fmt"
+
+    "github.com/ZicorXXIX/Image2ASCII/pkg/convert"
 )
 
 func commandInspect(cfg *config, args ...string) error {
@@ -15,6 +17,14 @@ func commandInspect(cfg *config, args ...string) error {
 		return errors.New("you have not caught that pokemon")
 	}
 
+    //For image to ascii
+    converter := convert.NewImageConverter()
+    options := convert.DefaultOptions
+    options.Width = 20
+    options.Height = 20
+    img := converter.ImageUrlToAsciiString(pokemon.Sprites.FrontDefault, options)
+
+    fmt.Println(img)
 	fmt.Println("Name:", pokemon.Name)
 	fmt.Println("Height:", pokemon.Height)
 	fmt.Println("Weight:", pokemon.Weight)
